@@ -20,12 +20,9 @@ class App extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick() {
-    this.setState((prevState) => {
-      if (prevState.isLoggedIn) {
-        return { isLoggedIn: false };
-      }
-      return { isLoggedIn: true };
-    });
+    this.setState((prevState) =>
+      prevState.isLoggedIn ? { isLoggedIn: false } : { isLoggedIn: true }
+    );
   }
   render() {
     return (
