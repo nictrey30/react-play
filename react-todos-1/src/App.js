@@ -15,8 +15,12 @@ class App extends React.Component {
     this.setState((prevState) => {
       return {
         todos: prevState.todos.map((todo) => {
-          if (todo.id === id) todo.completed = !todo.completed;
-          return todo;
+          if (todo.id === id) {
+            return {
+              ...todo,
+              completed: !todo.completed
+            };
+          }
         })
       };
     });
