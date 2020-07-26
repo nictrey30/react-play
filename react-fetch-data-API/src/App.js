@@ -3,30 +3,36 @@ import React, { Component } from 'react';
 class App extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      loading: false,
+      character: {}
+    };
   }
   // componentDidMount is like a hook in our React Component that allows us to run some kind of code immediately after the component first mounts to the DOM
   async componentDidMount() {
-    const response = await fetch(
-      'https://my-json-server.typicode.com/aman-leap/swapi/people/1'
-    );
+    this.setState({ loading: true });
+    const response = await fetch('https://swapi.dev/api/people/1/?format=json');
     const data = await response.json();
     this.setState({
-      data: data
+      loading: false,
+      character: data
     });
   }
   render() {
+    let count = 1;
+    const text = '...api is loading';
     return (
       <div>
-        {this.state.data
-          ? Object.entries(this.state.data).map(([key, value]) => {
+        {!this.state.loading
+          ? Object.entries(this.state.character).map(([key, value]) => {
               return (
-                <li>
+                <li key={count}>
                   {key}: {value.toString()}
+                  {(count = Math.ceil(count + Math.random()))}
                 </li>
               );
             })
-          : 'loading...'}
+          : text}
       </div>
     );
   }
