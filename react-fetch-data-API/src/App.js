@@ -12,13 +12,8 @@ class App extends Component {
     );
     const data = await response.json();
     this.setState({
-      data: data,
-      completed: true
+      data: data
     });
-    if (this.state.completed) {
-      return 'mere';
-    }
-    return 'pere';
   }
   render() {
     return (
