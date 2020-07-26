@@ -11,10 +11,29 @@ class App extends Component {
       'https://my-json-server.typicode.com/aman-leap/swapi/people/1'
     );
     const data = await response.json();
-    console.log(data);
+    this.setState({
+      data: data,
+      completed: true
+    });
+    if (this.state.completed) {
+      return 'mere';
+    }
+    return 'pere';
   }
   render() {
-    return <div>Code goes here</div>;
+    return (
+      <div>
+        {this.state.data
+          ? Object.entries(this.state.data).map(([key, value]) => {
+              return (
+                <li>
+                  {key}: {value.toString()}
+                </li>
+              );
+            })
+          : 'loading...'}
+      </div>
+    );
   }
 }
 
