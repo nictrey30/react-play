@@ -22,30 +22,32 @@ class App extends Component {
       firstName: '',
       lastName: '',
       gender: '',
-      location: 'Bucuresti',
+      location: '',
       age: '',
       dietaryRestrictions: {
         lapte: false,
         carne: false,
-        branza: false,
-        oua: false,
-        glute: false
+        branza: false
       }
     };
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(event) {
     const { name, value, checked, type } = event.target;
-    type === 'checkbox'
-      ? this.setState({
-          dietaryRestrictions: {
-            ...this.state.dietaryRestrictions,
-            [name]: checked
-          }
-        })
-      : this.setState({
-          [name]: value
-        });
+    if (type === 'checkbox') {
+      this.setState((prevState) => {
+        let updatedRestrictions = prevState.dietaryRestrictions;
+        updatedRestrictions[name] = checked;
+        return {
+          ...prevState,
+          dietaryRestrictions: updatedRestrictions
+        };
+      });
+    } else {
+      this.setState({
+        [name]: value
+      });
+    }
   }
   render() {
     return (
@@ -77,8 +79,8 @@ class App extends Component {
             type='number'
             value={this.state.age}
             onChange={this.handleChange}
-            min={0}
-            max={110}
+            min={1}
+            max={100}
           />
           <br />
           <label htmlFor='male'>male</label>
@@ -108,6 +110,7 @@ class App extends Component {
             value={this.state.location}
             onChange={this.handleChange}
           >
+            <option value=''>- Please choose a destination --</option>
             <option value='Bucuresti'>Bucuresti</option>
             <option value='Ploiesti'>Ploiesti</option>
             <option value='Sibiu'>Sibiu</option>
@@ -141,22 +144,6 @@ class App extends Component {
             checked={this.state.dietaryRestrictions.branza}
             onChange={this.handleChange}
           />
-          <label htmlFor='oua'>oua</label>
-          <input
-            type='checkbox'
-            name='oua'
-            id='oua'
-            checked={this.state.dietaryRestrictions.oua}
-            onChange={this.handleChange}
-          />
-          <label htmlFor='gluten'>gluten</label>
-          <input
-            type='checkbox'
-            name='gluten'
-            id='gluten'
-            checked={this.state.dietaryRestrictions.gluten}
-            onChange={this.handleChange}
-          />
           <br />
           <button>Submit</button>
         </form>
@@ -170,14 +157,13 @@ class App extends Component {
         <p>Your destination: {this.state.location}</p>
         <p>
           Your dietary restrictions:
-          {/* Dietary restrictions here, comma separated */}
-          {Object.entries(this.state.dietaryRestrictions).map(
-            ([key, value], index) => {
-              if (value) {
-                return <li key={index}>{key}</li>;
-              }
-            }
-          )}
+          {this.state.dietaryRestrictions
+            ? Object.entries(this.state.dietaryRestrictions).map(
+                ([key, value], index) => {
+                  return value ? <li key={index}>{key}</li> : null;
+                }
+              )
+            : null}
         </p>
       </main>
     );

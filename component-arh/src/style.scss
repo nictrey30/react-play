@@ -1,0 +1,11 @@
+body {
+  background-color: whitesmoke;
+}
+
+input[type='checkbox'] {
+  margin-right: 10px;
+  font-size: 30px;
+  &:focus {
+    outline: 0;
+  }
+}
