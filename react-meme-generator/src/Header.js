@@ -1,16 +1,10 @@
 import React from 'react';
 
-function Header(props) {
+function Header() {
   return (
-    <div className='meme'>
-      <h2>{props.memeData.name}</h2>
-      <img
-        src={props.memeData.url}
-        alt=''
-        width={props.memeData.width}
-        height={props.memeData.height}
-      />
-    </div>
+    <header>
+      <p>Meme Generator</p>
+    </header>
   );
 }
 
