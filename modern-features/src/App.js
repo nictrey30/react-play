@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 class App extends Component {
-  // using class properties, We remove the need for a constructor and avoid manually binding the handler.
+  // using class properties outside a constructor, We remove the need for a constructor and avoid manually binding the handler.
   state = {
     firstName: ''
   };
@@ -26,6 +26,7 @@ class App extends Component {
       <main>
         <form action=''>
           <label htmlFor='firstName'>First Name</label>
+          <br />
           <input
             type='text'
             name='firstName'
